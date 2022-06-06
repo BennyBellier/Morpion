@@ -8,28 +8,34 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.morpion.Set.Symbole;
+
 /**
  * JavaFX App
  */
 public class App extends Application {
 
     private static Scene scene;
+    private static SecondaryController sc;
 
     @Override
     public void start(Stage stage) throws IOException {
+
         scene = new Scene(loadFXML("secondary"), 640, 480);
         stage.setTitle("Morpion");
         stage.setScene(scene);
         stage.show();
-    }
-
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        Set s = new Set();
+        if (sc != null)
+            sc.setSet(s);
+        s.add(1, 1, Symbole.CROSS);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        Parent parent = fxmlLoader.load();
+        sc = (SecondaryController) fxmlLoader.getController();
+        return parent;
     }
 
     public static void main(String[] args) {

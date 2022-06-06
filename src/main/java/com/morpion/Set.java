@@ -52,6 +52,16 @@ public class Set {
     return true;
   }
 
+  Symbole[][] getMatrix() {
+    Symbole[][] m = new Symbole[3][3];
+    for (int i = 0; i < m.length; i++) {
+      for (int j = 0; j < m.length; j++) {
+        m[i][j] = matrix[i][j];
+      }
+    }
+    return m;
+  }
+
   @Override
   public String toString() {
     StringBuilder s = new StringBuilder();
