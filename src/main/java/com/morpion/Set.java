@@ -20,7 +20,8 @@ public class Set {
     }
   }
 
-  Symbole[][] matrix;
+  private Symbole[][] matrix;
+  private int[] winnerLine;
 
   Set() {
     matrix = new Symbole[3][3];
@@ -62,6 +63,48 @@ public class Set {
     return m;
   }
 
+  int[] winnerLine() {
+    return winnerLine;
+  }
+
+  boolean gamEnded() {
+    if (matrix[0][0] != null && (matrix[1][0] == matrix[0][0] && matrix[2][0] == matrix[0][0])) {
+      winnerLine = new int[] { 0, 0, 2, 0 };
+      return true;
+    }
+    if (matrix[0][0] != null && (matrix[0][1] == matrix[0][0] && matrix[0][2] == matrix[0][0])) {
+      winnerLine = new int[] { 0, 0, 0, 2 };
+      return true;
+    }
+    if (matrix[2][2] != null && (matrix[1][2] == matrix[2][2] && matrix[0][2] == matrix[2][2])) {
+      winnerLine = new int[] { 0, 2, 2, 2 };
+      return true;
+    }
+    if (matrix[2][2] != null && (matrix[2][1] == matrix[2][2] && matrix[2][0] == matrix[2][2])) {
+      winnerLine = new int[] { 2, 0, 2, 2 };
+      return true;
+    }
+    if (matrix[1][1] != null) {
+      if (matrix[0][1] == matrix[1][1] && matrix[2][1] == matrix[1][1]) {
+        winnerLine = new int[] { 0, 1, 2, 1 };
+        return true;
+      }
+      if (matrix[1][0] == matrix[1][1] && matrix[1][2] == matrix[1][1]) {
+        winnerLine = new int[] { 1, 0, 1, 2 };
+        return true;
+      }
+      if (matrix[0][0] == matrix[1][1] && matrix[2][2] == matrix[1][1]) {
+        winnerLine = new int[] { 0, 0, 2, 2 };
+        return true;
+      }
+      if (matrix[2][0] == matrix[1][1] && matrix[0][2] == matrix[1][1]) {
+        winnerLine = new int[] { 2, 0, 0, 2 };
+        return true;
+      }
+    }
+    return false;
+  }
+
   @Override
   public String toString() {
     StringBuilder s = new StringBuilder();
@@ -74,7 +117,7 @@ public class Set {
           s.append("   ");
 
         if (j < 2)
-        s.append("|");
+          s.append("|");
       }
       s.append("\n");
       if (i < 2)
