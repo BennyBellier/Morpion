@@ -67,38 +67,46 @@ public class Set {
     return winnerLine;
   }
 
+  /**
+   * Définition
+   * 1 droite
+   * 2 bas
+   * 3 diagonal bas
+   * 4 diagonal haut
+   * @return
+   */
   boolean gamEnded() {
     if (matrix[0][0] != null && (matrix[1][0] == matrix[0][0] && matrix[2][0] == matrix[0][0])) {
-      winnerLine = new int[] { 0, 0, 2, 0 };
+      winnerLine = new int[] { 0, 0, 1 };
       return true;
     }
     if (matrix[0][0] != null && (matrix[0][1] == matrix[0][0] && matrix[0][2] == matrix[0][0])) {
-      winnerLine = new int[] { 0, 0, 0, 2 };
+      winnerLine = new int[] { 0, 0, 2 };
       return true;
     }
     if (matrix[2][2] != null && (matrix[1][2] == matrix[2][2] && matrix[0][2] == matrix[2][2])) {
-      winnerLine = new int[] { 0, 2, 2, 2 };
+      winnerLine = new int[] { 0, 2, 1 };
       return true;
     }
     if (matrix[2][2] != null && (matrix[2][1] == matrix[2][2] && matrix[2][0] == matrix[2][2])) {
-      winnerLine = new int[] { 2, 0, 2, 2 };
+      winnerLine = new int[] { 2, 0, 2 };
       return true;
     }
     if (matrix[1][1] != null) {
       if (matrix[0][1] == matrix[1][1] && matrix[2][1] == matrix[1][1]) {
-        winnerLine = new int[] { 0, 1, 2, 1 };
+        winnerLine = new int[] { 0, 1, 1 };
         return true;
       }
       if (matrix[1][0] == matrix[1][1] && matrix[1][2] == matrix[1][1]) {
-        winnerLine = new int[] { 1, 0, 1, 2 };
+        winnerLine = new int[] { 1, 0, 2 };
         return true;
       }
       if (matrix[0][0] == matrix[1][1] && matrix[2][2] == matrix[1][1]) {
-        winnerLine = new int[] { 0, 0, 2, 2 };
+        winnerLine = new int[] { 0, 0, 3 };
         return true;
       }
       if (matrix[2][0] == matrix[1][1] && matrix[0][2] == matrix[1][1]) {
-        winnerLine = new int[] { 2, 0, 0, 2 };
+        winnerLine = new int[] { 2, 0, 4 };
         return true;
       }
     }

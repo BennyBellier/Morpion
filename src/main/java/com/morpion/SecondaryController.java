@@ -20,6 +20,7 @@ public class SecondaryController implements Initializable {
 	private Canvas disp;
 	private GraphicsContext gc;
 	private int playerTurn;
+	EventHandler<MouseEvent> clickHandler;
 
 	/**
 	 * @param set the set to set
@@ -49,6 +50,9 @@ public class SecondaryController implements Initializable {
 	@FXML
 	private void resetGame(ActionEvent actionEvent) {
 		set = new Set();
+		playerTurn = 0;
+		drawCanvas();
+		disp.addEventFilter(MouseEvent.MOUSE_CLICKED, clickHandler);
 	}
 
 	private void drawCanvas() {
@@ -81,18 +85,60 @@ public class SecondaryController implements Initializable {
 				}
 			}
 		}
+
+		if (set.gamEnded()) {
+			int[] winLine = set.winnerLine();
+			gc.setStroke(Color.BLACK);
+			int x1, y1, x2, y2;
+			switch (winLine[2]) {
+				case 1:
+					x1 = 140;
+					y1 = winLine[1] * 105 + 52;
+					x2 = 455;
+					y2 = winLine[1] * 105 + 52;
+					break;
+				case 2:
+					x1 = winLine[0] * 105 + 192;
+					y1 = 0;
+					x2 = winLine[0] * 105 + 192;
+					y2 = 315;
+					break;
+				case 3:
+					x1 = 140;
+					y1 = 0;
+					x2 = 455;
+					y2 = 315;
+					break;
+				case 4:
+					x1 = 140;
+					y1 = 315;
+					x2 = 455;
+					y2 = 0;
+					break;
+
+					default:
+					x1 = 0;
+					y1 = 0;
+					x2 = 0;
+					y2 = 0;
+					break;
+			}
+			gc.strokeLine(x1, y1, x2, y2);
+			disp.removeEventFilter(MouseEvent.MOUSE_CLICKED, clickHandler);
+		}
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		gc = disp.getGraphicsContext2D();
-		EventHandler<MouseEvent> clickHandler = new EventHandler<MouseEvent>() {
+		clickHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
 				click((int) e.getX(), (int) e.getY());
 			}
 		};
 		disp.addEventFilter(MouseEvent.MOUSE_CLICKED, clickHandler);
+		set = new Set();
 		drawCanvas();
 	}
 }
